@@ -1,6 +1,6 @@
 # `dbg(…)`
 
-[![Build status](https://github.com/sharkdp/dbg-macro/workflows/CI/badge.svg)](https://github.com/sharkdp/dbg-macro/actions) [![Try it online](https://img.shields.io/badge/try-online-f34b7d.svg)](https://repl.it/@sharkdp/dbg-macro-demo) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](dbg.h)
+[![Build status](https://github.com/sharkdp/dbg-macro/workflows/CI/badge.svg)](https://github.com/sharkdp/dbg-macro/actions) [![Try it online](https://img.shields.io/badge/try-online-f34b7d.svg)](https://godbolt.org/z/Yj13Kaxfh) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](dbg.h)
 
 *A macro for `printf`-style debugging fans.*
 
@@ -63,10 +63,10 @@ The code above produces this output ([try it yourself](https://repl.it/@sharkdp/
 
 To make this practical, the `dbg.h` header should be readily available from all kinds of different
 places and in all kinds of environments. The quick & dirty way is to actually copy the header file
-to `/usr/include` or to clone the repository and symlink `dbg.h` to `/usr/include/dbg.h`.
+to `/usr/local/include` or to clone the repository and symlink `dbg.h` to `/usr/local/include/dbg.h`.
 ``` bash
 git clone https://github.com/sharkdp/dbg-macro
-sudo ln -s $(readlink -f dbg-macro/dbg.h) /usr/include/dbg.h
+sudo ln -s $(readlink -f dbg-macro/dbg.h) /usr/local/include/dbg.h
 ```
 If you don't want to make untracked changes to your filesystem, check below if there is a package for
 your operating system or package manager.
@@ -124,8 +124,7 @@ int main() {
 
 ### Multiple arguments
 
-You can pass multiple arguments to the `dbg(…)` macro. The output of
-`dbg(x, y, z)` is same as `dbg(x); dbg(y); dbg(z);`:
+You can pass multiple arguments to the `dbg(…)` macro. This will output all expressions on a single line.
 ``` c++
 dbg(42, "hello world", false);
 ```
@@ -134,6 +133,8 @@ Note that you have to wrap "unprotected commas" in parentheses:
 ```c++
 dbg("a vector:", (std::vector<int>{2, 3, 4}));
 ```
+
+If you want to output expressions each on its own line write `dbg(x); dbg(y); dbg(z);` instead of `dbg(x, y, z)`.
 
 ### Hexadecimal, octal and binary format
 
